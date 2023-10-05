@@ -1,0 +1,2 @@
+#!/bin/bash
+printf `expr $TRUEKNOWLEDGE + 128`"\n" #Alternatively, it can be done as follows: echo $((TRUEKNOWLEDGE + 128))
