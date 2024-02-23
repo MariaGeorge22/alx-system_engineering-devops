@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# This Script is to show how for loops work
+
+
+for file in *;
+do
+	part_after_dash=${file##*-}
+	echo "$part_after_dash"
+done

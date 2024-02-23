@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# This Script is to show how while loops work
+
+i=1
+
+while [ $i -le 10 ]
+do
+	echo "Best School"
+	if [ $i -eq 9 ]; then
+	echo "Hi"
+	fi
+	((i++))  # ← put the command that you want to run on each line here
+done

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# This Script is to show how for loops work
+
+awk '{print $1,$9}' "apache-access.log"

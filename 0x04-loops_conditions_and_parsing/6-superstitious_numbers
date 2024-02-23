@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# This Script is to show how while loops work
+
+i=1
+
+while [ $i -le 20 ]
+do
+	echo "$i"
+	case $i in
+		   4 )
+	echo "bad luck from China"
+	;;
+		 9) # This catches all cases that weren't previously listed. That's why it has the wildcard "*" operator.
+	echo "bad luck from Japan"
+		    # ← put your command here
+		;;
+		 17) # This catches all cases that weren't previously listed. That's why it has the wildcard "*" operator.
+	echo "bad luck from Italy"
+		    # ← put your command here
+		;;	
+	
+	esac
+	
+	((i++))  # ← put the command that you want to run on each line here # ← put the command that you want to run on each line here
+done

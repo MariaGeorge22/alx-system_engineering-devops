@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# This Script is to show how until loops work
+
+i=0
+
+until [ $i -eq 10 ]; do
+	echo "Best School"
+	((i++))
+done
