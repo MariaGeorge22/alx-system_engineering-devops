@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# This Script explains PID
+
+pkill -9 -f "7-highlander"

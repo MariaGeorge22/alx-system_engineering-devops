@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# This Script explains PID
+
+# Find PIDs of processes containing the word "bash" in their name
+pids=$(pgrep -f bash)
+
+# Iterate over each PID and display the PID and process name
+for pid in $pids; do
+    echo "$pid bash"
+done
