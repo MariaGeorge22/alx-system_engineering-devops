@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# change localhost ip
+cp /etc/hosts ~/hosts.new
+# Set new IP address for localhost
+sed -i '0,/localhost/c\127.0.0.2  localhost' ~/hosts.new
+# Set new IP address for facebook.com
+if grep -q "facebook.com" ~/hosts.new; then
+	sed -i '0,/facebook.com/c\8.8.8.8  facebook.com' ~/hosts.new
+else
+	echo "8.8.8.8  facebook.com" >> ~/hosts.new
+fi
+# cat ~/hosts.new
+cp -f ~/hosts.new /etc/hosts
