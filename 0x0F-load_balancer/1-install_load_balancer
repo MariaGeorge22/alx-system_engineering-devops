@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# Install nginx web server
+apt-get install -y --no-install-recommends software-properties-common
+add-apt-repository -y ppa:vbernat/haproxy-2.0
+apt-get update
+apt-get install -y -o DPkg::Options::="--force-confnew" haproxy=2.0.\*
+# Enable HAProxy to be managed via an init script
+echo 'ENABLED=1' | sudo tee /etc/default/haproxy
+# Backup the original configuration file
+mv /etc/haproxy/haproxy.cfg{,.original}
+echo '
+global
+    log /dev/log    local0
+    log /dev/log    local1 notice
+    chroot /var/lib/haproxy
+    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
+    stats timeout 30s
+    user haproxy
+    group haproxy
+    daemon
+
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    retries 3
+    option  redispatch
+    timeout connect 5000
+    timeout client  30000
+    timeout server  30000
+
+frontend http_front
+   timeout client 30000
+   bind *:80
+   stats uri /haproxy?stats
+   default_backend http_back
+
+backend http_back
+   balance roundrobin
+   server web-01 54.209.122.183:80 check
+   server web-02 35.153.231.66:80 check
+' | sudo tee /etc/haproxy/haproxy.cfg
+
+# Restart HAProxy to apply the changes
+sudo service haproxy restar
