@@ -1,0 +1,6 @@
+Host "54.209.122.183"
+    HostName "54.209.122.183"
+    IdentityFile "~/.ssh/school"
+    BatchMode yes
+    IdentitiesOnly yes
+    PasswordAuthentication no
