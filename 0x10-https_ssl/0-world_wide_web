@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# display information about subdomains
+
+get_info(){
+  domain="$1"
+  subdomain="$2"
+  if [ "$domain" != "" ] 
+  then
+  if [ -z "$subdomain" ]
+  then
+  for s_d in "www" "lb-01" "web-01" "web-02"
+  do
+  dig "$s_d"."$domain" | awk '/ANSWER SECTION:/,/\n/' | awk -F' ' -v s_d="$s_d" 'NR==2 {print "The subdomain "s_d" is a "$4" record and points to "$5""}'
+  done
+  else
+  dig "$subdomain"."$domain" | awk '/ANSWER SECTION:/,/\n/' | awk -F' ' -v s_d="$subdomain" 'NR==2 {print "The subdomain "s_d" is a "$4" record and points to "$5""}'
+  fi
+  fi
+}
+
+get_info "$1" "$2"
