@@ -31,9 +31,9 @@ def get_all_employees():
         )
         for todo in user_todos:
             dict[id].append(
-                {"task": todo.get("title"), \
-                "completed": todo.get("completed"), \
-                "username": username, }
+            {"task": todo.get("title"),
+            "completed": todo.get("completed"),
+            "username": username, }
             )
     with open("todo_all_employees.json", 'w') as json_file:
         json.dump(dict, json_file)
