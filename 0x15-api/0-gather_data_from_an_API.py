@@ -1,30 +1,37 @@
 #!/usr/bin/python3
-'''A script that gathers employee name completed
-tasks and total number of tasks from an API
-'''
-
-import re
+"""
+a Python script that, using this REST API,
+for a given employee ID,
+returns information about his/her TODO list progress
+"""
 import requests
 import sys
+API_URL = "https://jsonplaceholder.typicode.com/"
 
-REST_API = "https://jsonplaceholder.typicode.com"
 
-if __name__ == '__main__':
-        if len(sys.argv) > 1:
-                    if re.fullmatch(r'\d+', sys.argv[1]):
-                                    id = int(sys.argv[1])
-                                                emp_req = requests.get('{}/users/{}'.format(REST_API, id)).json()
-                                                            task_req = requests.get('{}/todos'.format(REST_API)).json()
-                                                                        emp_name = emp_req.get('name')
-                                                                                    tasks = list(filter(lambda x: x.get('userId') == id, task_req))
-                                                                                                completed_tasks = list(filter(lambda x: x.get('completed'), tasks))
-                                                                                                            print(
-                                                                                                                                    'Employee {} is done with tasks({}/{}):'.format(
-                                                                                                                                                            emp_name,
-                                                                                                                                                                                len(completed_tasks),
-                                                                                                                                                                                                    len(tasks)
-                                                                                                                                                                                                                    )
-                                                                                                                                                )
-                                                                                                                        if len(completed_tasks) > 0:
-                                                                                                                                            for task in completed_tasks:
-                                                                                                                                                                    print('\t {}'.format(task.get('title')))
+def get_employee(id):
+    """
+    returns information about his/her TODO list progress
+    """
+    if not isinstance(id, int):
+        raise ValueError("id must be an integer")
+    if id is None:
+        raise ValueError("id must be supplied")
+    user_url = str.format("users/{}", id)
+    user = requests.get(API_URL+user_url).json()
+    todos_url = str.format(
+        "users/{}/todos", id)
+    todos = requests.get(API_URL+todos_url).json()
+    completed_todos = list(filter(lambda x: x.get("completed"), todos))
+    first_line = str.format("Employee {} is done" +
+                            " with tasks({}/" +
+                            "{}):", user.get("name"),
+                            len(completed_todos), len(todos))
+    print(first_line)
+    for todo in completed_todos:
+        print(str.format("\t {}", todo.get("title")))
+
+
+if __name__ == "__main__":
+    id = int(sys.argv[1])
+    get_employee(id)
