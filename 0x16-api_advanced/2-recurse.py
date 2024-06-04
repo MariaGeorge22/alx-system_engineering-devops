@@ -12,7 +12,7 @@ BASE = 'https://www.reddit.com/r/'
 
 def recurse(subreddit, hot_list=[]):
     """function"""
-    headers = {'User-Agent': 'my-app/0.0.1'}
+    header = {'User-Agent': 'my-app/0.0.1'}
     after = ''
     if len(hot_list) > 0:
         after = '?after=' + hot_list[-1].get('name')
